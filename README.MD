@@ -20,6 +20,7 @@ The key benefits are:
 
 ## Dependencies:
 TODO
+- Spectral (API specification Lint)
 
 ----------------------------
 
