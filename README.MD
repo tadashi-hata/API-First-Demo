@@ -25,10 +25,10 @@ TODO
 ----------------------------
 
 ## Related repositories:
-- TBD
+- [Developer Portal](https://github.com/tadashi-hata/API-First-Developer-Portal)
+
 
 The diagram bellow show how actions are executed and how the automation process works.
-
 TODO: include link here
 
 ------------------------------
