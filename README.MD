@@ -33,7 +33,9 @@ The key benefits are:
 The diagram bellow show how actions are executed and how the automation process works.
 ![Actions workflow](./images/API%20First%20example-Demo%20workflow.png)
 
-**Notes:**
+------------------------------
+
+## Setting up and using mock server:
 The Mock server is running on local host. If you want to setup your own mock-server follow these steps:
 
 Start docker:
@@ -48,52 +50,46 @@ Run MockServer Container:
 
     $ docker run -d --rm -p 1080:1080 mockserver/mockserver
 
-------------------------------
-
-## using mock server:
-Creating mock based on api document:
-
-    $ curl -v -X PUT "http://BRPC013768:1080/mockserver/openapi" -d '{
+Now your mock server is up in running on localhost:1080
+To create mock based on api documentation just execute the code bellow:
+    # For linux based runner
+    $ curl -v -X PUT "http://localhost:1080/mockserver/openapi" -d '{
             "specUrlOrPayload": "https://raw.githubusercontent.com/tadashi-hata/API-First-Demo/main/customers.yaml"
         }'
 
-    # On powershell
+    # On powershell for windows based runner
     $  $Body = "{'specUrlOrPayload': 'https://raw.githubusercontent.com/tadashi-hata/API-First-Demo/main/customers.yaml'}"
-        Invoke-WebRequest -UseBasicParsing -URI http://BRPC013768:1080/mockserver/openapi -Body $Body -ContentType "application/json" -Method 'PUT'
+        Invoke-WebRequest -UseBasicParsing -URI http://localhost:1080/mockserver/openapi -Body $Body -ContentType "application/json" -Method 'PUT'
 
 
-## Set up local github runner
-Ref:
-https://github.com/actions/runner/releases
+### Windows based mock-server
+In my case, I'm running the mock server on WSL ubuntu on windows machine.
+Since I have restrictions on firewall and network, I did a workaround to make github actions able to execute the request to create the mock services.
 
-The following snipped needs to be run on powershell:
+My workaround is setting up a windows based runner to execute the **Invoke-WebRequest** locally in order to create the mock.
 
-### Create a folder under the drive root
+Steps to set up local github runner
+**Create a folder under the drive root**
 
     $ mkdir \actions-runner ; cd \actions-runner
 
-### Download the latest runner package
+**Download the latest runner package**
 
     $ Invoke-WebRequest -Uri https://github.com/actions/runner/releases/download/v2.289.2/actions-runner-win-x64-2.289.2.zip -OutFile actions-runner-win-x64-2.289.2.zip
-### Extract the installer
+
+**Extract the installer**
 
     $ Add-Type -AssemblyName System.IO.Compression.FileSystem ;
     [System.IO.Compression.ZipFile]::ExtractToDirectory("$PWD\actions-runner-win-x64-2.289.2.zip", "$PWD")
 
-### Configure
-#### Create the runner and start the configuration experience
-    $ ./config.cmd --url https://github.com/tadashi-hata/API-First-Demo --token ABZ4KGCZWBMO3PHVLMRT2FTCKQWFM
+**Configure**
+Create the runner and start the configuration experience
 
-    # Configurations
-    # Enter the name of the runner group to add this runner to: [press Enter for Default]
-    # Enter the name of runner: [press Enter for BRPC013768] tiha-runner
+    $ ./config.cmd --url https://github.com/tadashi-hata/API-First-Demo --token {token}
 
     # This runner will have the following labels: 'self-hosted', 'Windows', 'X64'
 
-#### Run it!
-$ ./run.cmd
-
-For windows based os its required to set up additional steps:
+**Bootstrap the runner**
 Create a file named start-runner.ps1 and write the following command into it:
     
     $ C:\actions-runner\run.cmd

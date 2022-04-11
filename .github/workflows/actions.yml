@@ -27,6 +27,44 @@ jobs:
         uses: stoplightio/spectral-action@v0.8.0
         with:
           file_glob: '*.yaml'
+  
+  generate-clients-and-servers:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Generate Angular Client
+        uses: openapi-generators/openapitools-generator-action@v1
+        with:
+          generator: typescript-angular
+          openapi-file: 'customer.yaml'
+      
+      - name: Generate Java Server
+        uses: openapi-generators/openapitools-generator-action@v1
+        with:
+          generator: kotlin-spring
+          openapi-file: 'customer.yaml'
+      
+      - name: Pushes angular client artifact
+        uses: dmnemec/copy_file_to_another_repo_action@main
+        env:
+          API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
+        with:
+          source_file: 'typescript-angular-client'
+          destination_repo: 'tadashi-hata/API-First-Developer-Portal'
+          user_email: 'tadashi.hata@gft.com'
+          user_name: 'tadashi-hata'
+
+      - name: Pushes kotlin server artifact
+        uses: dmnemec/copy_file_to_another_repo_action@main
+        env:
+          API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
+        with:
+          source_file: 'src/main/kotlin'
+          destination_repo: 'tadashi-hata/API-First-Developer-Portal'
+          user_email: 'tadashi.hata@gft.com'
+          user_name: 'tadashi-hata'
 
   GenerateMock:
     needs: validate
