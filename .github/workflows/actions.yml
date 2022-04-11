@@ -30,17 +30,17 @@ jobs:
 
   GenerateMock:
     needs: validate
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     steps:
       - name: Generate Mocks
         run: |
-          curl -v -X PUT "http://192.168.100.39:1080/mockserver/openapi" -d '{
+          curl -v -X PUT "http://BRPC013768:1080/mockserver/openapi" -d '{
             "specUrlOrPayload": "https://raw.githubusercontent.com/tadashi-hata/API-First-Demo/main/customers.yaml"
           }'
   
   Build-Docs:
     needs: validate
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v3

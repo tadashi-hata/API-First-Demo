@@ -57,6 +57,7 @@ Creating mock based on api document:
             "specUrlOrPayload": "https://raw.githubusercontent.com/tadashi-hata/API-First-Demo/main/customers.yaml"
         }'
 
+Localhost name: BRPC013768.gft.com
 
 ## Set up local github runner
 Ref:
