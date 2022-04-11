@@ -36,14 +36,12 @@ jobs:
       - uses: actions/checkout@v3
 
       - name: Generate Angular Client
-        uses: openapi-generators/openapitools-generator-action@v1
         run: |
           curl -X POST -H "content-type:application/json" -d '{"options": {"packageName": "angular-client"},"openAPIUrl":"https://raw.githubusercontent.com/tadashi-hata/API-First-Demo/main/customers.yaml"}' http://api.openapi-generator.tech/api/gen/clients/typescript-angular > angular-response.json
           LINK=$(jq -r ".link" angular-response.json)
           curl -X GET -H "content-type: application/octet-steam" $LINK > angular-client.zip
       
       - name: Generate Java Server
-        uses: openapi-generators/openapitools-generator-action@v1
         run: |
           curl -X POST -H "content-type:application/json" -d '{"options": {"packageName": "kotlin-spring-server"},"openAPIUrl":"https://raw.githubusercontent.com/tadashi-hata/API-First-Demo/main/customers.yaml"}' http://api.openapi-generator.tech/api/gen/servers/kotlin-spring > kotlin-response.json
           LINK=$(jq -r ".link" kotlin-response.json)
