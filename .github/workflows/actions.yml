@@ -13,8 +13,7 @@ on:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "build"
-  build:
+  validate:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
 
@@ -29,6 +28,24 @@ jobs:
         with:
           file_glob: '*.yaml'
 
+  GenerateMock:
+    runs-on: self-hosted
+    steps:
+      - name: Generate Mocks
+        run: |
+          curl -v -X PUT "http://172.23.32.1:1080/mockserver/openapi" -d '{
+            "specUrlOrPayload": "https://raw.githubusercontent.com/tadashi-hata/API-First-Demo/main/customers.yaml"
+          }'
+          curl -v -X PUT "http://192.168.100.39:1080/mockserver/openapi" -d '{
+            "specUrlOrPayload": "https://raw.githubusercontent.com/tadashi-hata/API-First-Demo/main/customers.yaml"
+          }'
+  
+  Build-Docs:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
       - name: Build docs
         run: |
           #!/bin/bash
@@ -42,7 +59,7 @@ jobs:
           sed -i '7 i \ \ <link rel="icon" type="image/png" href="images/favicon.png"/>' index.html && \
           echo -e "\n Redoc step done!"
         
-      - name: Pushes test file
+      - name: Pushes index.html
         uses: dmnemec/copy_file_to_another_repo_action@main
         env:
           API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}

@@ -19,8 +19,10 @@ The key benefits are:
 ----------------------------
 
 ## Dependencies:
-TODO
-- Spectral (API specification Lint)
+- [Spectral](https://github.com/stoplightio/spectral)
+- [Mock server](https://www.mock-server.com/#what-is-mockserver)
+- [Redoc](https://github.com/Redocly/redoc)
+- [Open API Generator](https://openapi-generator.tech/)
 
 ----------------------------
 
@@ -29,6 +31,60 @@ TODO
 
 
 The diagram bellow show how actions are executed and how the automation process works.
-TODO: include link here
+![Actions workflow](./images/API%20First%20example-Demo%20workflow.png)
+
+**Notes:**
+The Mock server is running on local host. If you want to setup your own mock-server follow these steps:
+
+Start docker:
+
+    $ sudo dockerd
+
+Pull MockServer Image:
+
+    $ docker pull mockserver/mockserver
+
+Run MockServer Container:
+
+    $ docker run -d --rm -p 1080:1080 mockserver/mockserver
 
 ------------------------------
+
+## using mock server:
+Creating mock based on api document:
+
+    $ curl -v -X PUT "http://172.23.32.1:1080/mockserver/openapi" -d '{
+            "specUrlOrPayload": "https://raw.githubusercontent.com/tadashi-hata/API-First-Demo/main/customers.yaml"
+        }'
+
+
+## Set up local github runner
+Ref:
+https://github.com/actions/runner/releases
+
+The following snipped needs to be run on powershell:
+
+### Create a folder under the drive root
+
+    $ mkdir \actions-runner ; cd \actions-runner
+
+### Download the latest runner package
+
+    $ Invoke-WebRequest -Uri https://github.com/actions/runner/releases/download/v2.289.2/actions-runner-win-x64-2.289.2.zip -OutFile actions-runner-win-x64-2.289.2.zip
+### Extract the installer
+
+    $ Add-Type -AssemblyName System.IO.Compression.FileSystem ;
+    [System.IO.Compression.ZipFile]::ExtractToDirectory("$PWD\actions-runner-win-x64-2.289.2.zip", "$PWD")
+
+### Configure
+#### Create the runner and start the configuration experience
+    $ ./config.cmd --url https://github.com/tadashi-hata/API-First-Demo --token ABZ4KGCZWBMO3PHVLMRT2FTCKQWFM
+
+    # Configurations
+    # Enter the name of the runner group to add this runner to: [press Enter for Default]
+    # Enter the name of runner: [press Enter for BRPC013768] tiha-runner
+
+    # This runner will have the following labels: 'self-hosted', 'Windows', 'X64'
+
+#### Run it!
+$ ./run.cmd
