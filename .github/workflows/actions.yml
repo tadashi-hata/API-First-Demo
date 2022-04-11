@@ -52,7 +52,7 @@ jobs:
         env:
           API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
         with:
-          source_file: '*.zip'
+          source_file: 'kotlin-server.zip'
           destination_repo: 'tadashi-hata/API-First-Developer-Portal'
           user_email: 'tadashi.hata@gft.com'
           user_name: 'tadashi-hata'
