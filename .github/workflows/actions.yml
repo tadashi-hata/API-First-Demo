@@ -47,7 +47,17 @@ jobs:
           LINK=$(jq -r ".link" kotlin-response.json)
           curl -X GET -H "content-type: application/octet-steam" $LINK > kotlin-server.zip
       
-      - name: Pushes artifacts
+      - name: Pushes angular artifacts
+        uses: dmnemec/copy_file_to_another_repo_action@main
+        env:
+          API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
+        with:
+          source_file: 'angular-client.zip'
+          destination_repo: 'tadashi-hata/API-First-Developer-Portal'
+          user_email: 'tadashi.hata@gft.com'
+          user_name: 'tadashi-hata'
+      
+      - name: Pushes kotlin artifacts
         uses: dmnemec/copy_file_to_another_repo_action@main
         env:
           API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
