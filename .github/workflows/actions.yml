@@ -39,13 +39,13 @@ jobs:
         uses: openapi-generators/openapitools-generator-action@v1
         with:
           generator: typescript-angular
-          openapi-file: '/customer.yaml'
+          openapi-file: '../../customer.yaml'
       
       - name: Generate Java Server
         uses: openapi-generators/openapitools-generator-action@v1
         with:
           generator: kotlin-spring
-          openapi-file: '/customer.yaml'
+          openapi-file: '../../customer.yaml'
       
       - name: Pushes angular client artifact
         uses: dmnemec/copy_file_to_another_repo_action@main
