@@ -53,11 +53,14 @@ Run MockServer Container:
 ## using mock server:
 Creating mock based on api document:
 
-    $ curl -v -X PUT "http://172.23.32.1:1080/mockserver/openapi" -d '{
+    $ curl -v -X PUT "http://BRPC013768:1080/mockserver/openapi" -d '{
             "specUrlOrPayload": "https://raw.githubusercontent.com/tadashi-hata/API-First-Demo/main/customers.yaml"
         }'
 
-Localhost name: BRPC013768.gft.com
+    # On powershell
+    $  $Body = "{'specUrlOrPayload': 'https://raw.githubusercontent.com/tadashi-hata/API-First-Demo/main/customers.yaml'}"
+        Invoke-WebRequest -UseBasicParsing -URI http://BRPC013768:1080/mockserver/openapi -Body $Body -ContentType "application/json" -Method 'PUT'
+
 
 ## Set up local github runner
 Ref:
@@ -90,8 +93,12 @@ The following snipped needs to be run on powershell:
 #### Run it!
 $ ./run.cmd
 
+For windows based os its required to set up additional steps:
 Create a file named start-runner.ps1 and write the following command into it:
     
     $ C:\actions-runner\run.cmd
 
-$ powershell -ExecutionPolicy Bypass -File start-runner.ps1
+Them execute:
+
+    $ powershell -ExecutionPolicy Bypass -File start-runner.ps1
+
