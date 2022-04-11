@@ -37,32 +37,24 @@ jobs:
 
       - name: Generate Angular Client
         uses: openapi-generators/openapitools-generator-action@v1
-        with:
-          generator: typescript-angular
-          openapi-file: '/customer.yaml'
+        run: |
+          curl -X POST -H "content-type:application/json" -d '{"options": {"packageName": "angular-client"},"openAPIUrl":"https://raw.githubusercontent.com/tadashi-hata/API-First-Demo/main/customers.yaml"}' http://api.openapi-generator.tech/api/gen/clients/typescript-angular > angular-response.json
+          LINK=$(jq -r ".link" angular-response.json)
+          curl -X GET -H "content-type: application/octet-steam" $LINK > angular-client.zip
       
       - name: Generate Java Server
         uses: openapi-generators/openapitools-generator-action@v1
-        with:
-          generator: kotlin-spring
-          openapi-file: '/customer.yaml'
+        run: |
+          curl -X POST -H "content-type:application/json" -d '{"options": {"packageName": "kotlin-spring-server"},"openAPIUrl":"https://raw.githubusercontent.com/tadashi-hata/API-First-Demo/main/customers.yaml"}' http://api.openapi-generator.tech/api/gen/servers/kotlin-spring > kotlin-response.json
+          LINK=$(jq -r ".link" kotlin-response.json)
+          curl -X GET -H "content-type: application/octet-steam" $LINK > kotlin-server.zip
       
-      - name: Pushes angular client artifact
+      - name: Pushes artifacts
         uses: dmnemec/copy_file_to_another_repo_action@main
         env:
           API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
         with:
-          source_file: 'typescript-angular-client'
-          destination_repo: 'tadashi-hata/API-First-Developer-Portal'
-          user_email: 'tadashi.hata@gft.com'
-          user_name: 'tadashi-hata'
-
-      - name: Pushes kotlin server artifact
-        uses: dmnemec/copy_file_to_another_repo_action@main
-        env:
-          API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
-        with:
-          source_file: 'src/main/kotlin'
+          source_file: '*.zip'
           destination_repo: 'tadashi-hata/API-First-Developer-Portal'
           user_email: 'tadashi.hata@gft.com'
           user_name: 'tadashi-hata'

@@ -98,3 +98,13 @@ Them execute:
 
     $ powershell -ExecutionPolicy Bypass -File start-runner.ps1
 
+
+
+
+curl -X POST -H "content-type:application/json" -d '{"options": {"packageName": "angular-client"},"openAPIUrl":"https://raw.githubusercontent.com/tadashi-hata/API-First-Demo/main/customers.yaml"}' http://api.openapi-generator.tech/api/gen/clients/typescript-angular > angular-response.json
+
+LINK=$(jq -r ".link" response.json)
+
+curl -X GET -H "content-type: application/octet-steam" $LINK > angular-client.zip
+
+
