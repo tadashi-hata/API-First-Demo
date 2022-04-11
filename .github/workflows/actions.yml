@@ -29,7 +29,8 @@ jobs:
           file_glob: '*.yaml'
 
   GenerateMock:
-    runs-on: self-hosted
+    needs: validate
+    runs-on: ubuntu-latest
     steps:
       - name: Generate Mocks
         run: |
@@ -41,6 +42,7 @@ jobs:
           }'
   
   Build-Docs:
+    needs: validate
     runs-on: ubuntu-latest
 
     steps:
