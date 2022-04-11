@@ -88,3 +88,9 @@ The following snipped needs to be run on powershell:
 
 #### Run it!
 $ ./run.cmd
+
+Create a file named start-runner.ps1 and write the following command into it:
+    
+    $ C:\actions-runner\run.cmd
+
+$ powershell -ExecutionPolicy Bypass -File start-runner.ps1

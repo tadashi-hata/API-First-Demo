@@ -40,7 +40,7 @@ jobs:
   
   Build-Docs:
     needs: validate
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
 
     steps:
       - uses: actions/checkout@v3
