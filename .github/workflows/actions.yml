@@ -34,9 +34,6 @@ jobs:
     steps:
       - name: Generate Mocks
         run: |
-          curl -v -X PUT "http://172.23.32.1:1080/mockserver/openapi" -d '{
-            "specUrlOrPayload": "https://raw.githubusercontent.com/tadashi-hata/API-First-Demo/main/customers.yaml"
-          }'
           curl -v -X PUT "http://192.168.100.39:1080/mockserver/openapi" -d '{
             "specUrlOrPayload": "https://raw.githubusercontent.com/tadashi-hata/API-First-Demo/main/customers.yaml"
           }'
