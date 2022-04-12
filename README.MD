@@ -50,8 +50,9 @@ Run MockServer Container:
 
     $ docker run -d --rm -p 1080:1080 mockserver/mockserver
 
-Now your mock server is up in running on localhost:1080
+Now your mock server is up in running on localhost:1080.
 To create mock based on api documentation just execute the code bellow:
+    
     # For linux based runner
     $ curl -v -X PUT "http://localhost:1080/mockserver/openapi" -d '{
             "specUrlOrPayload": "https://raw.githubusercontent.com/tadashi-hata/API-First-Demo/main/customers.yaml"
@@ -71,7 +72,8 @@ My workaround is setting up a windows based runner to execute the **Invoke-WebRe
 Steps to set up local github runner
 **Create a folder under the drive root**
 
-    $ mkdir \actions-runner ; cd \actions-runner
+    $ mkdir \actions-runner
+    $ cd \actions-runner
 
 **Download the latest runner package**
 
@@ -98,13 +100,5 @@ Them execute:
 
     $ powershell -ExecutionPolicy Bypass -File start-runner.ps1
 
-
-
-
-curl -X POST -H "content-type:application/json" -d '{"options": {"packageName": "angular-client"},"openAPIUrl":"https://raw.githubusercontent.com/tadashi-hata/API-First-Demo/main/customers.yaml"}' http://api.openapi-generator.tech/api/gen/clients/typescript-angular > angular-response.json
-
-LINK=$(jq -r ".link" response.json)
-
-curl -X GET -H "content-type: application/octet-steam" $LINK > angular-client.zip
 
 
