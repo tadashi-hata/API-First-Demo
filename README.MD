@@ -36,7 +36,7 @@ The diagram bellow show how actions are executed and how the automation process 
 ------------------------------
 
 ## Setting up and using mock server:
-The Mock server is running on local host. If you want to setup your own mock-server follow these steps:
+The Mock server is running on localhost. If you want to setup your own mock-server follow these steps:
 
 Start docker:
 
