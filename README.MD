@@ -1,4 +1,6 @@
-# API First Demo
+# API Ops Demo
+API Ops aims to speed up the API Governance process and development lifecycle leveraging API First approach and DevOps culture.
+
 ## What is API First?
 API First is a consumer-driven approach to design your API focused on developer experience. 
 
