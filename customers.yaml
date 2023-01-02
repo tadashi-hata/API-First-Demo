@@ -1,6 +1,6 @@
 openapi: 3.0.0
 info:
-  title: API Customers - Open Banking Brasil - APIOps demo 2023!!
+  title: API Customers - Open Banking Brasil - APIOps demo - Validation error example!!
   description: |
     API de dados cadastrais de clientes do Open Banking Brasil – Fase 2.
     API que retorna os dados cadastrais de clientes e de seus representantes, incluindo dados de identificação, de qualificação financeira, informações sobre representantes cadastrados e sobre o relacionamento financeiro do cliente com a instituição transmissora dos dados.\
@@ -55,6 +55,46 @@ tags:
   - name: Customers
     description: Operações para listagem das informações Cadastrais do Cliente
 paths:
+  /personal/identifications:
+    get:
+      tags:
+        - Customers
+      summary: Obtém os registros de identificação da pessoa natural.
+      description: Método para obter os registros de identificação da pessoa natural mantidos na instituição transmissora.
+      operationId: customersGetPersonalIdentifications2
+      parameters:
+        - $ref: '#/components/parameters/Authorization'
+        - $ref: '#/components/parameters/xFapiAuthDate'
+        - $ref: '#/components/parameters/xFapiCustomerIpAddress'
+        - $ref: '#/components/parameters/xFapiInteractionId'
+        - $ref: '#/components/parameters/xCustomerUserAgent'
+      responses:
+        '200':
+          $ref: '#/components/responses/OKResponsePersonalCustomersIdentification'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '405':
+          $ref: '#/components/responses/MethodNotAllowed'
+        '406':
+          $ref: '#/components/responses/NotAcceptable'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+        default:
+          $ref: '#/components/responses/OKResponsePersonalCustomersIdentification'
+      security:
+        - OpenId:
+            - openid
+          OAuth2Security:
+            - 'consent:consentId'
+            - customers
   /personal/identifications:
     get:
       tags:
