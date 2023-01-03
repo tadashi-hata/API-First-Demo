@@ -1,6 +1,6 @@
 openapi: 3.0.0
 info:
-  title: API Customers - Open Banking Brasil - APIOps demo 2023 - Caminho feliz!!
+  title: API Customers - Open Banking Brasil - APIOps demo 2023 - Caminho feliz - Bradesco!!
   description: |
     API de dados cadastrais de clientes do Open Banking Brasil – Fase 2.
     API que retorna os dados cadastrais de clientes e de seus representantes, incluindo dados de identificação, de qualificação financeira, informações sobre representantes cadastrados e sobre o relacionamento financeiro do cliente com a instituição transmissora dos dados.\
