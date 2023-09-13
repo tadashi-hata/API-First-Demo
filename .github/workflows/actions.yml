@@ -73,7 +73,7 @@ jobs:
     steps:
       - name: Generate Mocks
         run: |
-          $Body = "{'specUrlOrPayload': 'https://raw.githubusercontent.com/tadashi-hata/API-First-Demo/main/customers.yaml'}"
+          $Body = "{'specUrlOrPayload': 'https://raw.githubusercontent.com/tadashi-hata/API-Ops-Demo/main/customers.yaml'}"
           Invoke-WebRequest -UseBasicParsing -URI http://BRPC013768:1080/mockserver/openapi -Body $Body -ContentType "application/json" -Method 'PUT'
   
   Build-Docs:
